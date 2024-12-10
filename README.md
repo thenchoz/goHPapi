@@ -2,17 +2,17 @@
 
 Un-official golang wrapper for multiple Harry Potter API
 
-[![PotterAPI](https://github.com/fedeperin/potterapi)](https://github.com/fedeperin/potterapi)
-[![Harry Potter API](https://github.com/joeltgray/HarryPotterAPI/tree/main?tab=readme-ov-file)](https://github.com/joeltgray/HarryPotterAPI/tree/main?tab=readme-ov-file)
+[PotterAPI](https://github.com/fedeperin/potterapi)
+[Harry Potter API](https://github.com/joeltgray/HarryPotterAPI/tree/main?tab=readme-ov-file)
 
-Install
+## Install
 Add ```github.com/thenchoz/goHPapi```to your go.mod(recommended) or:
 ```
 EXPORT GO11MODULE=off
 go get -u github.com/thenchoz/goHPapi
 ```
 
-Basic Usage Without Parameters
+## Basic Usage
 ```go
 import (
   "context"
