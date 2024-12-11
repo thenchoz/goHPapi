@@ -7,14 +7,16 @@ import (
 
 func Test_Book(t *testing.T) {
 	book := Book{
-		ID:            123,
 		Number:        1,
 		Title:         "title",
 		OriginalTitle: "ogTitle",
 		ReleaseDate:   "date",
 		Description:   "desc",
+		Summary:       "sum",
 		Pages:         10,
-		Cover:         "url",
+		Cover:         []string{"url"},
+		Dedication:    "dedi",
+		Wiki:          "wiki",
 	}
 	bookjson, err := json.Marshal(book)
 	if err != nil {
@@ -27,13 +29,12 @@ func Test_Book(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	if !(book.ID == consumer.ID &&
-		book.Number == consumer.Number &&
+	if !(book.Number == consumer.Number &&
+		book.Title == consumer.Title &&
 		book.OriginalTitle == consumer.OriginalTitle &&
 		book.ReleaseDate == consumer.ReleaseDate &&
 		book.Description == consumer.Description &&
-		book.Pages == consumer.Pages &&
-		book.Cover == consumer.Cover) {
+		book.Pages == consumer.Pages) {
 		t.Fatalf("Unmatched Book")
 	}
 }

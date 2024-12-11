@@ -1,9 +1,18 @@
 # goHPapi
 
-Un-official golang wrapper for multiple Harry Potter API
+Un-official golang wrapper for multiple Harry Potter API. Concats data from multiple API on some request.
 
 [PotterAPI](https://github.com/fedeperin/potterapi)
+
+Books (merged), Characters, Houses and Spell
+
 [Harry Potter API](https://github.com/joeltgray/HarryPotterAPI/tree/main?tab=readme-ov-file)
+
+Quotes
+
+[Potterhead API](https://github.com/AcidOP/potterhead-api)
+
+Books (merged)
 
 ## Install
 Add ```github.com/thenchoz/goHPapi```to your go.mod(recommended) or:
@@ -47,14 +56,16 @@ Config available methods:
 Response Struct
 ```go
 type Book struct {
-	ID            float64
-	Number        int    
-	Title         string 
-	OriginalTitle string 
-	ReleaseDate   string 
-	Description   string 
-	Pages         int    
-	Cover         string 
+	Number        int
+	Title         string
+	OriginalTitle string
+	ReleaseDate   string
+	Description   string
+	Summary       string
+	Pages         int
+	Cover         []string
+	Dedication    string
+	Wiki          string
 }
 
 type Character struct {

@@ -2,38 +2,98 @@ package goHPapi
 
 import (
 	"context"
+	"slices"
+	"strconv"
+	"sync"
 )
 
-func (hp *HPapi) FetchBook(ctx context.Context) (bc Book, err error) {
+func (hp *HPapi) FetchBook(ctx context.Context) (book Book, err error) {
 
 	var params = make(map[string]string)
 
-	mainURL := baseURL + hp.ExportedParams.lang + endpointBooksURL
-
+	mainURL := baseURLFedeperin + hp.ExportedParams.lang + endpointBooksURL
 	if hp.ExportedParams.id == "" {
 		mainURL += "/random"
 	} else {
 		params["index"] = hp.ExportedParams.id
 	}
+	bcf, err := Fetch[bookConsumerFedeperin](ctx, mainURL, params)
+	if err != nil {
+		return
+	}
 
-	bc, err = Fetch[Book](ctx, mainURL, params)
+	// successive, manage random + index
+	mainURL = baseURLPotterhead + endpointBooksURL + "/" + strconv.Itoa(bcf.Number)
+	bcp, err := Fetch[bookConsumerPotterhead](ctx, mainURL, make(map[string]string))
+	if err != nil {
+		// manage non retreived book
+		bcp = bookConsumerPotterhead{}
+	}
+
+	book, err = mergeBook(bcf, bcp)
 	return
 }
 
-func (hp *HPapi) FetchBooks(ctx context.Context) (bc []Book, err error) {
+func (hp *HPapi) FetchBooks(ctx context.Context) (books []Book, err error) {
 
-	var params = make(map[string]string)
+	var (
+		params = make(map[string]string)
+		bcp    []bookConsumerPotterhead
+		bcf    []bookConsumerFedeperin
+		wg     sync.WaitGroup
+	)
 
-	mainURL := baseURL + hp.ExportedParams.lang + endpointBooksURL
+	ctx, cancel := context.WithCancel(ctx)
 
-	if hp.ExportedParams.search != "" {
-		params["search"] = hp.ExportedParams.search
+	// parallel to improve speed
+	wg.Add(1)
+	go func() {
+		defer wg.Done()
+
+		mainURL := baseURLPotterhead + endpointBooksURL
+		bcp, err = Fetch[[]bookConsumerPotterhead](ctx, mainURL, make(map[string]string))
+		if err != nil {
+			cancel()
+		}
+	}()
+
+	wg.Add(1)
+	go func() {
+		defer wg.Done()
+
+		mainURL := baseURLFedeperin + hp.ExportedParams.lang + endpointBooksURL
+		if hp.ExportedParams.search != "" {
+			params["search"] = hp.ExportedParams.search
+		}
+		if hp.ExportedParams.max != "" {
+			params["max"] = hp.ExportedParams.max
+		}
+
+		bcf, err = Fetch[[]bookConsumerFedeperin](ctx, mainURL, params)
+		if err != nil {
+			cancel()
+		}
+	}()
+
+	wg.Wait()
+	books = make([]Book, len(bcf))
+	for i, book1 := range bcf {
+		idx := slices.IndexFunc(
+			bcp,
+			func(c bookConsumerPotterhead) bool {
+				val, err := strconv.Atoi(c.Number)
+				return err == nil && val == book1.Number
+			},
+		)
+
+		var book2 bookConsumerPotterhead
+		if idx != -1 {
+			book2 = bcp[idx]
+		}
+
+		books[i], err = mergeBook(book1, book2)
 	}
-	if hp.ExportedParams.max != "" {
-		params["max"] = hp.ExportedParams.max
-	}
 
-	bc, err = Fetch[[]Book](ctx, mainURL, params)
 	return
 }
 
@@ -41,7 +101,7 @@ func (hp *HPapi) FetchCharacter(ctx context.Context) (cc Character, err error) {
 
 	var params = make(map[string]string)
 
-	mainURL := baseURL + hp.ExportedParams.lang + endpointCharactersURL
+	mainURL := baseURLFedeperin + hp.ExportedParams.lang + endpointCharactersURL
 
 	if hp.ExportedParams.id == "" {
 		mainURL += "/random"
@@ -57,7 +117,7 @@ func (hp *HPapi) FetchCharacters(ctx context.Context) (cc []Character, err error
 
 	var params = make(map[string]string)
 
-	mainURL := baseURL + hp.ExportedParams.lang + endpointBooksURL
+	mainURL := baseURLFedeperin + hp.ExportedParams.lang + endpointBooksURL
 
 	if hp.ExportedParams.search != "" {
 		params["search"] = hp.ExportedParams.search
@@ -74,7 +134,7 @@ func (hp *HPapi) FetchHouse(ctx context.Context) (hc House, err error) {
 
 	var params = make(map[string]string)
 
-	mainURL := baseURL + hp.ExportedParams.lang + endpointHousesURL
+	mainURL := baseURLFedeperin + hp.ExportedParams.lang + endpointHousesURL
 
 	if hp.ExportedParams.id == "" {
 		mainURL += "/random"
@@ -90,7 +150,7 @@ func (hp *HPapi) FetchHouses(ctx context.Context) (hc []House, err error) {
 
 	var params = make(map[string]string)
 
-	mainURL := baseURL + hp.ExportedParams.lang + endpointBooksURL
+	mainURL := baseURLFedeperin + hp.ExportedParams.lang + endpointBooksURL
 
 	if hp.ExportedParams.search != "" {
 		params["search"] = hp.ExportedParams.search
@@ -107,7 +167,7 @@ func (hp *HPapi) FetchSpell(ctx context.Context) (sc Spell, err error) {
 
 	var params = make(map[string]string)
 
-	mainURL := baseURL + hp.ExportedParams.lang + endpointSpellsURL
+	mainURL := baseURLFedeperin + hp.ExportedParams.lang + endpointSpellsURL
 
 	if hp.ExportedParams.id == "" {
 		mainURL += "/random"
@@ -123,7 +183,7 @@ func (hp *HPapi) FetchSpells(ctx context.Context) (sc []Spell, err error) {
 
 	var params = make(map[string]string)
 
-	mainURL := baseURL + hp.ExportedParams.lang + endpointBooksURL
+	mainURL := baseURLFedeperin + hp.ExportedParams.lang + endpointBooksURL
 
 	if hp.ExportedParams.search != "" {
 		params["search"] = hp.ExportedParams.search

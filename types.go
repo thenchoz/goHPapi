@@ -1,14 +1,5 @@
 package goHPapi
 
-const (
-	baseURL               string = "https://potterapi-fedeperin.vercel.app/"
-	endpointBooksURL      string = "/books"
-	endpointCharactersURL string = "/characters"
-	endpointHousesURL     string = "/houses"
-	endpointSpellsURL     string = "/spells"
-	quoteURL              string = "https://api.portkey.uk/quote"
-)
-
 type Params struct {
 	id     string
 	search string
@@ -17,14 +8,16 @@ type Params struct {
 }
 
 type Book struct {
-	ID            float64 `json:"index"`
-	Number        int     `json:"number"`
-	Title         string  `json:"title"`
-	OriginalTitle string  `json:"originalTitle"`
-	ReleaseDate   string  `json:"releaseDate"`
-	Description   string  `json:"description"`
-	Pages         int     `json:"pages"`
-	Cover         string  `json:"cover"`
+	Number        int
+	Title         string
+	OriginalTitle string
+	ReleaseDate   string
+	Description   string
+	Summary       string
+	Pages         int
+	Cover         []string
+	Dedication    string
+	Wiki          string
 }
 
 type Character struct {
