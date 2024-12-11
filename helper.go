@@ -6,6 +6,7 @@ import (
 	"io"
 	"net/http"
 	"net/url"
+	"strconv"
 )
 
 type HPapi struct {
@@ -22,6 +23,10 @@ func (hp *HPapi) SetID(id string) {
 
 func (hp *HPapi) SetSearch(search string) {
 	hp.ExportedParams.search = search
+}
+
+func (hp *HPapi) SetMax(max int) {
+	hp.ExportedParams.max = strconv.Itoa(max)
 }
 
 func (hp *HPapi) SetLang(lang string) {

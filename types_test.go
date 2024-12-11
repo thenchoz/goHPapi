@@ -5,8 +5,8 @@ import (
 	"testing"
 )
 
-func Test_Book_Consumer(t *testing.T) {
-	book := bookConsumer{
+func Test_Book(t *testing.T) {
+	book := Book{
 		ID:            123,
 		Number:        1,
 		Title:         "title",
@@ -21,7 +21,7 @@ func Test_Book_Consumer(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	var consumer bookConsumer
+	var consumer Book
 	err = json.Unmarshal(bookjson, &consumer)
 	if err != nil {
 		t.Fatal(err)
@@ -38,7 +38,7 @@ func Test_Book_Consumer(t *testing.T) {
 	}
 }
 func Test_Character_Consumer(t *testing.T) {
-	book := characterConsumer{
+	book := Character{
 		ID:            123,
 		FullName:      "fullName",
 		NickName:      "nickName",
@@ -53,7 +53,7 @@ func Test_Character_Consumer(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	var consumer characterConsumer
+	var consumer Character
 	err = json.Unmarshal(bookjson, &consumer)
 	if err != nil {
 		t.Fatal(err)
@@ -70,7 +70,7 @@ func Test_Character_Consumer(t *testing.T) {
 	}
 }
 func Test_house_Consumer(t *testing.T) {
-	book := houseConsumer{
+	book := House{
 		ID:      123,
 		House:   "house",
 		Emoji:   "emoji",
@@ -83,7 +83,7 @@ func Test_house_Consumer(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	var consumer houseConsumer
+	var consumer House
 	err = json.Unmarshal(bookjson, &consumer)
 	if err != nil {
 		t.Fatal(err)
@@ -100,7 +100,7 @@ func Test_house_Consumer(t *testing.T) {
 }
 
 func Test_Spell_Consumer(t *testing.T) {
-	book := spellConsumer{
+	book := Spell{
 		ID:    123,
 		Spell: "spell",
 		Use:   "use",
@@ -110,7 +110,7 @@ func Test_Spell_Consumer(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	var consumer spellConsumer
+	var consumer Spell
 	err = json.Unmarshal(bookjson, &consumer)
 	if err != nil {
 		t.Fatal(err)
@@ -124,7 +124,7 @@ func Test_Spell_Consumer(t *testing.T) {
 }
 
 func Test_Quote_Consumer(t *testing.T) {
-	book := quoteConsumer{
+	book := Quote{
 		ID:      "123",
 		Quote:   "quote",
 		Speaker: "speaker",
@@ -136,7 +136,7 @@ func Test_Quote_Consumer(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	var consumer quoteConsumer
+	var consumer Quote
 	err = json.Unmarshal(bookjson, &consumer)
 	if err != nil {
 		t.Fatal(err)

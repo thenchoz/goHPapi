@@ -26,22 +26,27 @@ func main(){
 ```
 Available fetch commands:
 ```go
-  book       , err := api.FetchBook(context.Background())
-  character  , err := api.FetchCharacter(context.Background())
-  house      , err := api.FetchHouse(context.Background())
-  spell      , err := api.FetchSpell(context.Background())
-  quote      , err := api.FetchQuote(context.Background())
+  api.FetchBook(context.Background())		(Book		, error)
+  api.FetchBooks(context.Background())		([]Book		, error)
+  api.FetchCharacter(context.Background())	(Character	, error)
+  api.FetchCharacters(context.Background())	([]Character, error)
+  api.FetchHouse(context.Background())		(House		, error)
+  api.FetchHouses(context.Background())		([]House	, error)
+  api.FetchSpell(context.Background())		(Spell		, error)
+  api.FetchSpells(context.Background())		([]Spell	, error)
+  api.FetchQuote(context.Background())		(Quote		, error)
 ```
 Config available methods:
 ```go
   api.SetID(id string)
   api.SetSearch(keyword string)
+  api.SetMax(max int)
   api.SetLang(lang string)      // default  "en"
   api.Reset()
 ```
 Response Struct
 ```go
-type bookConsumer struct {
+type Book struct {
 	ID            float64
 	Number        int    
 	Title         string 
@@ -52,7 +57,7 @@ type bookConsumer struct {
 	Cover         string 
 }
 
-type characterConsumer struct {
+type Character struct {
 	ID            float64 
 	FullName      string  
 	NickName      string  
@@ -63,7 +68,7 @@ type characterConsumer struct {
 	Birthdate     string  
 }
 
-type houseConsumer struct {
+type House struct {
 	ID      float64 
 	House   string  
 	Emoji   string  
@@ -72,13 +77,13 @@ type houseConsumer struct {
 	Animal  string  
 }
 
-type spellConsumer struct {
+type Spell struct {
 	ID    float64
 	Spell string 
 	Use   string 
 }
 
-type quoteConsumer struct {
+type Quote struct {
 	ID      string
 	Quote   string
 	Speaker string

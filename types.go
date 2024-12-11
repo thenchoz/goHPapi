@@ -12,10 +12,11 @@ const (
 type Params struct {
 	id     string
 	search string
+	max    string
 	lang   string
 }
 
-type bookConsumer struct {
+type Book struct {
 	ID            float64 `json:"index"`
 	Number        int     `json:"number"`
 	Title         string  `json:"title"`
@@ -26,7 +27,7 @@ type bookConsumer struct {
 	Cover         string  `json:"cover"`
 }
 
-type characterConsumer struct {
+type Character struct {
 	ID            float64  `json:"index"`
 	FullName      string   `json:"fullName"`
 	NickName      string   `json:"nickname"`
@@ -37,7 +38,7 @@ type characterConsumer struct {
 	Birthdate     string   `json:"birthdate"`
 }
 
-type houseConsumer struct {
+type House struct {
 	ID      float64  `json:"index"`
 	House   string   `json:"house"`
 	Emoji   string   `json:"emoji"`
@@ -46,13 +47,13 @@ type houseConsumer struct {
 	Animal  string   `json:"animal"`
 }
 
-type spellConsumer struct {
+type Spell struct {
 	ID    float64 `json:"index"`
 	Spell string  `json:"spell"`
 	Use   string  `json:"use"`
 }
 
-type quoteConsumer struct {
+type Quote struct {
 	ID      string `json:"id"`
 	Quote   string `json:"quote"`
 	Speaker string `json:"speaker"`
