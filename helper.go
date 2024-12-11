@@ -16,19 +16,19 @@ func New() *HPapi {
 	return &HPapi{Params{lang: "en"}}
 }
 
-func (hp *HPapi) setID(id string) {
+func (hp *HPapi) SetID(id string) {
 	hp.ExportedParams.id = id
 }
 
-func (hp *HPapi) setSearch(search string) {
+func (hp *HPapi) SetSearch(search string) {
 	hp.ExportedParams.search = search
 }
 
-func (hp *HPapi) setLang(lang string) {
+func (hp *HPapi) SetLang(lang string) {
 	hp.ExportedParams.lang = lang
 }
 
-func (hp *HPapi) reset() {
+func (hp *HPapi) Reset() {
 	hp.ExportedParams = Params{lang: "en"}
 }
 

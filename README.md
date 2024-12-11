@@ -34,10 +34,10 @@ Available fetch commands:
 ```
 Config available methods:
 ```go
-  api.setID(id string)
-  api.setSearch(keyword string)
-  api.setLang(lang string)      // default  "en"
-  api.reset()
+  api.SetID(id string)
+  api.SetSearch(keyword string)
+  api.SetLang(lang string)      // default  "en"
+  api.Reset()
 ```
 Response Struct
 ```go

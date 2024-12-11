@@ -17,9 +17,9 @@ func Test_Params(t *testing.T) {
 		t.Fatalf("Wrong base api")
 	}
 
-	api.setID(testID)
-	api.setSearch(testSearch)
-	api.setLang(testLang)
+	api.SetID(testID)
+	api.SetSearch(testSearch)
+	api.SetLang(testLang)
 
 	if !(api.ExportedParams.id == testID &&
 		api.ExportedParams.search == testSearch &&
@@ -27,7 +27,7 @@ func Test_Params(t *testing.T) {
 		t.Fatalf("Wrong setup api")
 	}
 
-	api.reset()
+	api.Reset()
 
 	if !(api.ExportedParams.id == "" &&
 		api.ExportedParams.search == "" &&
