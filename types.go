@@ -20,36 +20,57 @@ type Book struct {
 	Wiki          string
 }
 
+type Movie struct {
+	Number           int
+	Title            string
+	Summary          string
+	Directors        []string
+	ScreenWriters    []string
+	Producers        []string
+	Cinematographers []string
+	Editors          []string
+	Distributors     []string
+	MusicComposers   []string
+	ReleaseDate      string
+	RunningTime      string
+	Budget           string
+	BoxOffice        string
+	Rating           string
+	Trailer          string
+	Poster           string
+	Wiki             string
+}
+
 type Character struct {
-	ID            float64  `json:"index"`
-	FullName      string   `json:"fullName"`
-	NickName      string   `json:"nickname"`
-	HogwartsHouse string   `json:"hogwartsHouse"`
-	InterpretedBy string   `json:"interpretedBy"`
-	Children      []string `json:"children"`
-	Image         string   `json:"image"`
-	Birthdate     string   `json:"birthdate"`
+	ID            int
+	FullName      string
+	NickName      string
+	HogwartsHouse string
+	InterpretedBy string
+	Children      []string
+	Image         string
+	Birthdate     string
 }
 
 type House struct {
-	ID      float64  `json:"index"`
-	House   string   `json:"house"`
-	Emoji   string   `json:"emoji"`
-	Founder string   `json:"founder"`
-	Colors  []string `json:"colors"`
-	Animal  string   `json:"animal"`
+	ID      int
+	House   string
+	Emoji   string
+	Founder string
+	Colors  []string
+	Animal  string
 }
 
 type Spell struct {
-	ID    float64 `json:"index"`
-	Spell string  `json:"spell"`
-	Use   string  `json:"use"`
+	ID    int
+	Spell string
+	Use   string
 }
 
 type Quote struct {
-	ID      string `json:"id"`
-	Quote   string `json:"quote"`
-	Speaker string `json:"speaker"`
-	Story   string `json:"story"`
-	Source  string `json:"source"`
+	ID      string
+	Quote   string
+	Speaker string
+	Story   string
+	Source  string
 }

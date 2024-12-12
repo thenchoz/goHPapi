@@ -23,6 +23,24 @@ func Test_Fetch_Books(t *testing.T) {
 	}
 }
 
+func Test_Fetch_Movie(t *testing.T) {
+	api := New()
+	_, err := api.FetchMovie(context.Background())
+
+	if err != nil {
+		t.Fatal(err)
+	}
+}
+
+func Test_Fetch_Movies(t *testing.T) {
+	api := New()
+	_, err := api.FetchMovies(context.Background())
+
+	if err != nil {
+		t.Fatal(err)
+	}
+}
+
 func Test_Fetch_Character(t *testing.T) {
 	api := New()
 	_, err := api.FetchCharacter(context.Background())

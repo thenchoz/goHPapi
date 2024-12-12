@@ -129,3 +129,71 @@ func mergeBook(book1 bookConsumerFedeperin, book2 bookConsumerPotterhead) (book 
 	}
 	return
 }
+
+func mergeMovie(movie1 movieConsumerPotterhead) (movie Movie, err error) {
+	nb, err := strconv.Atoi(movie1.Number)
+	if err != nil {
+		return
+	}
+	movie = Movie{
+		Number:           nb,
+		Title:            movie1.Title,
+		Summary:          movie1.Summary,
+		Directors:        movie1.Directors,
+		ScreenWriters:    movie1.ScreenWriters,
+		Producers:        movie1.Producers,
+		Cinematographers: movie1.Cinematographers,
+		Editors:          movie1.Editors,
+		Distributors:     movie1.Distributors,
+		MusicComposers:   movie1.MusicComposers,
+		ReleaseDate:      movie1.ReleaseDate,
+		RunningTime:      movie1.RunningTime,
+		Budget:           movie1.Budget,
+		BoxOffice:        movie1.BoxOffice,
+		Rating:           movie1.Rating,
+		Trailer:          movie1.Trailer,
+		Poster:           movie1.Poster,
+		Wiki:             movie1.Wiki,
+	}
+	return
+}
+
+func mergeCharacter(char1 characterConsumerFedeperin) (char Character, err error) {
+	char = Character{
+		ID:            int(char1.ID),
+		FullName:      char1.FullName,
+		NickName:      char1.NickName,
+		HogwartsHouse: char1.HogwartsHouse,
+		InterpretedBy: char1.InterpretedBy,
+		Children:      char1.Children,
+		Image:         char1.Image,
+		Birthdate:     char1.Birthdate,
+	}
+	return
+}
+
+func mergeHouse(house1 houseConsumerFedeperin) (house House, err error) {
+	house = House{
+		ID:      int(house1.ID),
+		House:   house1.House,
+		Emoji:   house1.Emoji,
+		Founder: house1.Founder,
+		Colors:  house1.Colors,
+		Animal:  house1.Animal,
+	}
+	return
+}
+
+func mergeSpell(spell1 spellConsumerFedeperin) (spell Spell, err error) {
+	spell = Spell{
+		ID:    int(spell1.ID),
+		Spell: spell1.Spell,
+		Use:   spell1.Use,
+	}
+	return
+}
+
+func mergeQuote(quote1 quoteConsumer) (quote Quote, err error) {
+	quote = Quote(quote1)
+	return
+}

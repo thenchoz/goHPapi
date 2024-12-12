@@ -6,13 +6,13 @@ Un-official golang wrapper for multiple Harry Potter API. Concats data from mult
 
 Books (merged), Characters, Houses and Spell
 
+[Potterhead API](https://github.com/AcidOP/potterhead-api)
+
+Books (merged), Movies
+
 [Harry Potter API](https://github.com/joeltgray/HarryPotterAPI/tree/main?tab=readme-ov-file)
 
 Quotes
-
-[Potterhead API](https://github.com/AcidOP/potterhead-api)
-
-Books (merged)
 
 ## Install
 Add ```github.com/thenchoz/goHPapi```to your go.mod(recommended) or:
@@ -35,15 +35,17 @@ func main(){
 ```
 Available fetch commands:
 ```go
-  api.FetchBook(context.Background())		(Book		, error)
-  api.FetchBooks(context.Background())		([]Book		, error)
-  api.FetchCharacter(context.Background())	(Character	, error)
-  api.FetchCharacters(context.Background())	([]Character, error)
-  api.FetchHouse(context.Background())		(House		, error)
-  api.FetchHouses(context.Background())		([]House	, error)
-  api.FetchSpell(context.Background())		(Spell		, error)
-  api.FetchSpells(context.Background())		([]Spell	, error)
-  api.FetchQuote(context.Background())		(Quote		, error)
+  api.FetchBook(Context)		(Book		, error)
+  api.FetchBooks(Context)		([]Book		, error)
+  api.FetchMovie(Context)		(Movie		, error)
+  api.FetchMovies(Context)		([]Movie	, error)
+  api.FetchCharacter(Context)	(Character	, error)
+  api.FetchCharacters(Context)	([]Character, error)
+  api.FetchHouse(Context)		(House		, error)
+  api.FetchHouses(Context)		([]House	, error)
+  api.FetchSpell(Context)		(Spell		, error)
+  api.FetchSpells(Context)		([]Spell	, error)
+  api.FetchQuote(Context)		(Quote		, error)
 ```
 Config available methods:
 ```go
@@ -68,30 +70,51 @@ type Book struct {
 	Wiki          string
 }
 
+type Movie struct {
+	Number           int
+	Title            string
+	Summary          string
+	Directors        []string
+	ScreenWriters    []string
+	Producers        []string
+	Cinematographers []string
+	Editors          []string
+	Distributors     []string
+	MusicComposers   []string
+	ReleaseDate      string
+	RunningTime      string
+	Budget           string
+	BoxOffice        string
+	Rating           string
+	Trailer          string
+	Poster           string
+	Wiki             string
+}
+
 type Character struct {
-	ID            float64 
-	FullName      string  
-	NickName      string  
-	HogwartsHouse string  
-	InterpretedBy string  
+	ID            int
+	FullName      string
+	NickName      string
+	HogwartsHouse string
+	InterpretedBy string
 	Children      []string
-	Image         string  
-	Birthdate     string  
+	Image         string
+	Birthdate     string
 }
 
 type House struct {
-	ID      float64 
-	House   string  
-	Emoji   string  
-	Founder string  
+	ID      int
+	House   string
+	Emoji   string
+	Founder string
 	Colors  []string
-	Animal  string  
+	Animal  string
 }
 
 type Spell struct {
-	ID    float64
-	Spell string 
-	Use   string 
+	ID    int
+	Spell string
+	Use   string
 }
 
 type Quote struct {
@@ -101,3 +124,4 @@ type Quote struct {
 	Story   string
 	Source  string
 }
+```

@@ -4,6 +4,7 @@ const (
 	baseURLFedeperin      string = "https://potterapi-fedeperin.vercel.app/"
 	baseURLPotterhead     string = "https://potterhead-api.vercel.app/api"
 	endpointBooksURL      string = "/books"
+	endpointMoviesURL     string = "/movies"
 	endpointCharactersURL string = "/characters"
 	endpointHousesURL     string = "/houses"
 	endpointSpellsURL     string = "/spells"
@@ -32,7 +33,28 @@ type bookConsumerPotterhead struct {
 	Wiki        string `json:"wiki"`
 }
 
-type CharacterConsumerFedeperin struct {
+type movieConsumerPotterhead struct {
+	Number           string   `json:"serial"`
+	Title            string   `json:"title"`
+	Summary          string   `json:"summary"`
+	Directors        []string `json:"directors"`
+	ScreenWriters    []string `json:"screenwriters"`
+	Producers        []string `json:"producers"`
+	Cinematographers []string `json:"cinematographers"`
+	Editors          []string `json:"editors"`
+	Distributors     []string `json:"distributors"`
+	MusicComposers   []string `json:"music_composers"`
+	ReleaseDate      string   `json:"release_date"`
+	RunningTime      string   `json:"running_time"`
+	Budget           string   `json:"budget"`
+	BoxOffice        string   `json:"box_office"`
+	Rating           string   `json:"rating"`
+	Trailer          string   `json:"trailer"`
+	Poster           string   `json:"poster"`
+	Wiki             string   `json:"wiki"`
+}
+
+type characterConsumerFedeperin struct {
 	ID            float64  `json:"index"`
 	FullName      string   `json:"fullName"`
 	NickName      string   `json:"nickname"`
@@ -43,7 +65,7 @@ type CharacterConsumerFedeperin struct {
 	Birthdate     string   `json:"birthdate"`
 }
 
-type HouseConsumerFedeperin struct {
+type houseConsumerFedeperin struct {
 	ID      float64  `json:"index"`
 	House   string   `json:"house"`
 	Emoji   string   `json:"emoji"`
@@ -52,13 +74,13 @@ type HouseConsumerFedeperin struct {
 	Animal  string   `json:"animal"`
 }
 
-type SpellConsumerFedeperin struct {
+type spellConsumerFedeperin struct {
 	ID    float64 `json:"index"`
 	Spell string  `json:"spell"`
 	Use   string  `json:"use"`
 }
 
-type QuoteConsumer struct {
+type quoteConsumer struct {
 	ID      string `json:"id"`
 	Quote   string `json:"quote"`
 	Speaker string `json:"speaker"`

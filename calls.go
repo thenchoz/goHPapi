@@ -2,6 +2,7 @@ package goHPapi
 
 import (
 	"context"
+	"math/rand/v2"
 	"slices"
 	"strconv"
 	"sync"
@@ -92,12 +93,54 @@ func (hp *HPapi) FetchBooks(ctx context.Context) (books []Book, err error) {
 		}
 
 		books[i], err = mergeBook(book1, book2)
+
+		if err != nil {
+			return
+		}
 	}
 
 	return
 }
 
-func (hp *HPapi) FetchCharacter(ctx context.Context) (cc Character, err error) {
+func (hp *HPapi) FetchMovie(ctx context.Context) (movie Movie, err error) {
+
+	mainURL := baseURLPotterhead + endpointMoviesURL + "/"
+	if hp.ExportedParams.id == "" {
+		mainURL += strconv.Itoa(rand.IntN(8) + 1)
+	} else {
+		mainURL += hp.ExportedParams.id
+	}
+
+	mc, err := Fetch[movieConsumerPotterhead](ctx, mainURL, make(map[string]string))
+	if err != nil {
+		return
+	}
+
+	movie, err = mergeMovie(mc)
+	return
+}
+
+func (hp *HPapi) FetchMovies(ctx context.Context) (movies []Movie, err error) {
+
+	mainURL := baseURLPotterhead + endpointMoviesURL
+
+	mc, err := Fetch[[]movieConsumerPotterhead](ctx, mainURL, make(map[string]string))
+	if err != nil {
+		return
+	}
+
+	movies = make([]Movie, len(mc))
+	for i, m := range mc {
+		movies[i], err = mergeMovie(m)
+		if err != nil {
+			return
+		}
+	}
+
+	return
+}
+
+func (hp *HPapi) FetchCharacter(ctx context.Context) (character Character, err error) {
 
 	var params = make(map[string]string)
 
@@ -109,15 +152,20 @@ func (hp *HPapi) FetchCharacter(ctx context.Context) (cc Character, err error) {
 		params["index"] = hp.ExportedParams.id
 	}
 
-	cc, err = Fetch[Character](ctx, mainURL, params)
+	cc, err := Fetch[characterConsumerFedeperin](ctx, mainURL, params)
+	if err != nil {
+		return
+	}
+
+	character, err = mergeCharacter(cc)
 	return
 }
 
-func (hp *HPapi) FetchCharacters(ctx context.Context) (cc []Character, err error) {
+func (hp *HPapi) FetchCharacters(ctx context.Context) (characters []Character, err error) {
 
 	var params = make(map[string]string)
 
-	mainURL := baseURLFedeperin + hp.ExportedParams.lang + endpointBooksURL
+	mainURL := baseURLFedeperin + hp.ExportedParams.lang + endpointCharactersURL
 
 	if hp.ExportedParams.search != "" {
 		params["search"] = hp.ExportedParams.search
@@ -126,11 +174,22 @@ func (hp *HPapi) FetchCharacters(ctx context.Context) (cc []Character, err error
 		params["max"] = hp.ExportedParams.max
 	}
 
-	cc, err = Fetch[[]Character](ctx, mainURL, params)
+	cc, err := Fetch[[]characterConsumerFedeperin](ctx, mainURL, params)
+	if err != nil {
+		return
+	}
+
+	characters = make([]Character, len(cc))
+	for i, c := range cc {
+		characters[i], err = mergeCharacter(c)
+		if err != nil {
+			return
+		}
+	}
 	return
 }
 
-func (hp *HPapi) FetchHouse(ctx context.Context) (hc House, err error) {
+func (hp *HPapi) FetchHouse(ctx context.Context) (house House, err error) {
 
 	var params = make(map[string]string)
 
@@ -142,15 +201,20 @@ func (hp *HPapi) FetchHouse(ctx context.Context) (hc House, err error) {
 		params["index"] = hp.ExportedParams.id
 	}
 
-	hc, err = Fetch[House](ctx, mainURL, params)
+	hc, err := Fetch[houseConsumerFedeperin](ctx, mainURL, params)
+	if err != nil {
+		return
+	}
+
+	house, err = mergeHouse(hc)
 	return
 }
 
-func (hp *HPapi) FetchHouses(ctx context.Context) (hc []House, err error) {
+func (hp *HPapi) FetchHouses(ctx context.Context) (houses []House, err error) {
 
 	var params = make(map[string]string)
 
-	mainURL := baseURLFedeperin + hp.ExportedParams.lang + endpointBooksURL
+	mainURL := baseURLFedeperin + hp.ExportedParams.lang + endpointHousesURL
 
 	if hp.ExportedParams.search != "" {
 		params["search"] = hp.ExportedParams.search
@@ -159,11 +223,22 @@ func (hp *HPapi) FetchHouses(ctx context.Context) (hc []House, err error) {
 		params["max"] = hp.ExportedParams.max
 	}
 
-	hc, err = Fetch[[]House](ctx, mainURL, params)
+	hc, err := Fetch[[]houseConsumerFedeperin](ctx, mainURL, params)
+	if err != nil {
+		return
+	}
+
+	houses = make([]House, len(hc))
+	for i, h := range hc {
+		houses[i], err = mergeHouse(h)
+		if err != nil {
+			return
+		}
+	}
 	return
 }
 
-func (hp *HPapi) FetchSpell(ctx context.Context) (sc Spell, err error) {
+func (hp *HPapi) FetchSpell(ctx context.Context) (spell Spell, err error) {
 
 	var params = make(map[string]string)
 
@@ -175,15 +250,20 @@ func (hp *HPapi) FetchSpell(ctx context.Context) (sc Spell, err error) {
 		params["index"] = hp.ExportedParams.id
 	}
 
-	sc, err = Fetch[Spell](ctx, mainURL, params)
+	sc, err := Fetch[spellConsumerFedeperin](ctx, mainURL, params)
+	if err != nil {
+		return
+	}
+
+	spell, err = mergeSpell(sc)
 	return
 }
 
-func (hp *HPapi) FetchSpells(ctx context.Context) (sc []Spell, err error) {
+func (hp *HPapi) FetchSpells(ctx context.Context) (spells []Spell, err error) {
 
 	var params = make(map[string]string)
 
-	mainURL := baseURLFedeperin + hp.ExportedParams.lang + endpointBooksURL
+	mainURL := baseURLFedeperin + hp.ExportedParams.lang + endpointSpellsURL
 
 	if hp.ExportedParams.search != "" {
 		params["search"] = hp.ExportedParams.search
@@ -192,11 +272,22 @@ func (hp *HPapi) FetchSpells(ctx context.Context) (sc []Spell, err error) {
 		params["max"] = hp.ExportedParams.max
 	}
 
-	sc, err = Fetch[[]Spell](ctx, mainURL, params)
+	sc, err := Fetch[[]spellConsumerFedeperin](ctx, mainURL, params)
+	if err != nil {
+		return
+	}
+
+	spells = make([]Spell, len(sc))
+	for i, s := range sc {
+		spells[i], err = mergeSpell(s)
+		if err != nil {
+			return
+		}
+	}
 	return
 }
 
-func (hp *HPapi) FetchQuote(ctx context.Context) (qc Quote, err error) {
+func (hp *HPapi) FetchQuote(ctx context.Context) (quote Quote, err error) {
 
 	var params = make(map[string]string)
 
@@ -206,6 +297,11 @@ func (hp *HPapi) FetchQuote(ctx context.Context) (qc Quote, err error) {
 		mainURL += "/" + hp.ExportedParams.id
 	}
 
-	qc, err = Fetch[Quote](ctx, mainURL, params)
+	qc, err := Fetch[quoteConsumer](ctx, mainURL, params)
+	if err != nil {
+		return
+	}
+
+	quote, err = mergeQuote(qc)
 	return
 }
